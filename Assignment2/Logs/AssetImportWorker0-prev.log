@@ -1,0 +1,98 @@
+Using pre-set license
+
+ COMMAND LINE ARGUMENTS:
+/Users/taiagea/Documents/Unity 2021/2020.3.1f1/Unity.app/Contents/MacOS/Unity
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+/Users/taiagea/Documents/GitHub/Assignment2/Assignment2
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+53684
+Successfully changed project path to: /Users/taiagea/Documents/GitHub/Assignment2/Assignment2
+/Users/taiagea/Documents/GitHub/Assignment2/Assignment2
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 64.92 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.1f1 (77a89f25062f)
+[Subsystems] Discovering subsystems at path /Users/taiagea/Documents/Unity 2021/2020.3.1f1/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Users/taiagea/Documents/GitHub/Assignment2/Assignment2/Assets
+GfxDevice: creating device client; threaded=0
+2021-10-19 14:44:05.491 Unity[21559:736997] Color LCD preferred device: Intel(R) Iris(TM) Graphics 6100 (low power)
+2021-10-19 14:44:05.491 Unity[21559:736997] Metal devices available: 1
+2021-10-19 14:44:05.491 Unity[21559:736997] 0: Intel(R) Iris(TM) Graphics 6100 (low power)
+2021-10-19 14:44:05.492 Unity[21559:736997] Using device Intel(R) Iris(TM) Graphics 6100 (low power)
+Initializing Metal device caps: Intel(R) Iris(TM) Graphics 6100
+Initialize mono
+Mono path[0] = '/Users/taiagea/Documents/Unity 2021/2020.3.1f1/Unity.app/Contents/Managed'
+Mono path[1] = '/Users/taiagea/Documents/Unity 2021/2020.3.1f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = '/Users/taiagea/Documents/Unity 2021/2020.3.1f1/Unity.app/Contents/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56559
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /Users/taiagea/Documents/Unity 2021/2020.3.1f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: /Users/taiagea/Documents/Unity 2021/2020.3.1f1/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001265 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 78.21 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.239 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.000725 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 48.63 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.938 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launching external process: /Users/taiagea/Documents/Unity 2021/2020.3.1f1/Unity.app/Contents/Tools/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.02 seconds
+Refreshing native plugins compatible for Editor in 0.38 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1806 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 144.0 MB.
+System memory in use after: 143.9 MB.
+
+Unloading 24 unused Assets to reduce memory usage. Loaded Objects now: 2248.
+Total: 3.798875 ms (FindLiveObjects: 0.459864 ms CreateObjectMapping: 0.213498 ms MarkObjects: 2.824670 ms  DeleteObjects: 0.298827 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Scenes/Main.unity
+  artifactKey: Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Main.unity using Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6478756034f8c1f44127d0c90189fd6') in 0.014159 seconds
+  Import took 0.018241 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 462.751414 seconds.
+  path: Assets/Scenes/Scripts
+  artifactKey: Guid(c0fab4ce495264ab588e70835d1682a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Scripts using Guid(c0fab4ce495264ab588e70835d1682a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b87869eb6ef175b5f1a124dd8c42181') in 0.002726 seconds
+  Import took 0.016224 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001056 seconds.
+  path: Assets/Scenes/Scripts
+  artifactKey: Guid(c0fab4ce495264ab588e70835d1682a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Scripts using Guid(c0fab4ce495264ab588e70835d1682a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b87869eb6ef175b5f1a124dd8c42181') in 0.008007 seconds
+  Import took 0.017812 seconds .
+
