@@ -216,6 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1047288660}
   - component: {fileID: 1047288659}
+  - component: {fileID: 1047288661}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -236,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 1141156329}
-  control: {fileID: 0}
+  mesh: {fileID: 0}
   jointLocation: {x: 0, y: 0, z: 1}
   jointOffset: {x: 0, y: 0, z: 0}
   angle: 0
@@ -246,7 +247,8 @@ MonoBehaviour:
   - {x: -1, y: 0, z: 1}
   - {x: 1, y: 0, z: 1}
   - {x: 1, y: -1, z: 1}
-  mesh: {fileID: 0}
+  speed: 1
+  offset: {x: 0, y: 0, z: 0}
 --- !u!4 &1047288660
 Transform:
   m_ObjectHideFlags: 0
@@ -255,12 +257,24 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047288658}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: -9, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1047288661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047288658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f22a31ac7676642bdb8a73eb111c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1141156329
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1141156331}
   - component: {fileID: 1141156330}
+  - component: {fileID: 1141156332}
   m_Layer: 0
   m_Name: Lower Arm
   m_TagString: Untagged
@@ -291,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 1296875350}
-  control: {fileID: 0}
+  mesh: {fileID: 0}
   jointLocation: {x: 0, y: 2, z: 1}
   jointOffset: {x: 0, y: 2, z: 1}
   angle: 0
@@ -301,7 +316,8 @@ MonoBehaviour:
   - {x: -0.25, y: 2, z: 1}
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
-  mesh: {fileID: 0}
+  speed: 1
+  offset: {x: 0, y: 0, z: 0}
 --- !u!4 &1141156331
 Transform:
   m_ObjectHideFlags: 0
@@ -310,12 +326,24 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141156329}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: -9, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1141156332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141156329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f22a31ac7676642bdb8a73eb111c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1184525003
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,6 +354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1184525005}
   - component: {fileID: 1184525004}
+  - component: {fileID: 1184525006}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -346,7 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 0}
-  control: {fileID: 0}
+  mesh: {fileID: 0}
   jointLocation: {x: 0, y: 4, z: 1}
   jointOffset: {x: 0, y: 2, z: 1}
   angle: 0
@@ -356,7 +385,8 @@ MonoBehaviour:
   - {x: 1.5, y: 2, z: 1}
   - {x: 1.8, y: 0.4, z: 1}
   - {x: 1, y: 1, z: 1}
-  mesh: {fileID: 0}
+  speed: 1
+  offset: {x: 0, y: 0, z: 0}
 --- !u!4 &1184525005
 Transform:
   m_ObjectHideFlags: 0
@@ -365,12 +395,24 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184525003}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.12, y: 1.6, z: 0}
+  m_LocalPosition: {x: -9, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1184525006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184525003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f22a31ac7676642bdb8a73eb111c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1296875350
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1296875352}
   - component: {fileID: 1296875351}
+  - component: {fileID: 1296875353}
   m_Layer: 0
   m_Name: Upper Arm
   m_TagString: Untagged
@@ -401,7 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 1184525003}
-  control: {fileID: 0}
+  mesh: {fileID: 0}
   jointLocation: {x: 0, y: 4, z: 1}
   jointOffset: {x: 0, y: 2, z: 1}
   angle: 0
@@ -411,7 +454,8 @@ MonoBehaviour:
   - {x: -0.25, y: 2, z: 1}
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
-  mesh: {fileID: 0}
+  speed: 1
+  offset: {x: 0, y: 0, z: 0}
 --- !u!4 &1296875352
 Transform:
   m_ObjectHideFlags: 0
@@ -420,12 +464,24 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1296875350}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -9, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1296875353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296875350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f22a31ac7676642bdb8a73eb111c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1527481276
 GameObject:
   m_ObjectHideFlags: 0

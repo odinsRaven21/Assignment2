@@ -5,7 +5,7 @@ using UnityEngine;
 public class QUTJr : MonoBehaviour
 {
     public GameObject child;
-    public GameObject control;
+    public Mesh mesh;
 
     public Vector3 jointLocation;
     public Vector3 jointOffset;
@@ -14,18 +14,43 @@ public class QUTJr : MonoBehaviour
     public float lastAngle;
     public Vector3[] limbVertexLocations;
 
-    public Mesh mesh;
+    //set movement speed
+    public float speed = 1f;
+
+    //set positions to move between
+    private Vector3 pos1;
+    private Vector3 pos2;
+
+    public Vector3 offset;
 
     // Start is called before the first frame update
     void Start()
     {
-        //DrawLimb();
+        DrawLimb();
+
+        //set the positions
+        pos1 = new Vector3(-9, 0, 0);
+        pos2 = new Vector3(9, 0, 0);
+
+
+        //move the child to the joint location
+        /*if (child != null)
+        {
+            child.GetComponent<QUTJr>().MoveByOffSet(jointOffset);
+        }*/
+
+        //MoveByOffSet(jointOffset);
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        DrawLimb();
+        //recalculate the bounds of the mesh
+        mesh.RecalculateBounds();
+
+        Walking(offset);
     }
 
     private void DrawLimb()
@@ -61,5 +86,53 @@ public class QUTJr : MonoBehaviour
 
         //set vertex indices
         mesh.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
+    }
+
+    /*public void MoveByOffSet(Vector3 offset)
+    {
+        //get the vertices from the matrix
+        Vector3[] vertices = mesh.vertices;
+
+        //Get the translation matrix
+        Matrix3x3 T = gameObject.GetComponent<Transform>().Translate(offset);
+
+        //transform each point in the mesh to it's new position
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            vertices[i] = T.MultiplyPoint(vertices[i]);
+        }
+
+        //set the vertices in the mesh to their new position
+        mesh.vertices = vertices;
+
+        jointLocation = T.MultiplyPoint(jointLocation);
+
+        if (child != null)
+        {
+            child.GetComponent<QUTJr>().MoveByOffSet(offset);
+        }
+    }*/
+
+    public void Walking(Vector3 offset)
+    {
+        //offset = mesh.bounds.center;
+
+        Vector3[] vertices = mesh.vertices;
+
+        //Get the translation matrix
+        Matrix3x3 T = gameObject.GetComponent<Transform>().Translate(offset);
+
+        //transform each point in the mesh to it's new position
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            vertices[i] = T.MultiplyPoint(vertices[i]);
+        }
+
+        //set the vertices in the mesh to their new position
+        mesh.vertices = vertices;
+
+        pos1 = T.MultiplyPoint(pos1);
+        pos2 = T.MultiplyPoint(pos2);
+
     }
 }
