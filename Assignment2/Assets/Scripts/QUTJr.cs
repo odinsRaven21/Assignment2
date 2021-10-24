@@ -50,7 +50,7 @@ public class QUTJr : MonoBehaviour
         //recalculate the bounds of the mesh
         mesh.RecalculateBounds();
 
-        Walking(offset);
+        Walking(pos1);
     }
 
     private void DrawLimb()
@@ -113,26 +113,29 @@ public class QUTJr : MonoBehaviour
         }
     }*/
 
-    public void Walking(Vector3 offset)
+    public void Walking(Vector3 pos)
     {
-        //offset = mesh.bounds.center;
+        Matrix3x3 T1 = gameObject.GetComponent<Transform>().Translate(-pos);
+
+        Matrix3x3 T2 = gameObject.GetComponent<Transform>().Translate(pos);
+
+        Matrix3x3 M = T1 * T2 * Time.deltaTime;
 
         Vector3[] vertices = mesh.vertices;
 
         //Get the translation matrix
-        Matrix3x3 T = gameObject.GetComponent<Transform>().Translate(offset);
+        //Matrix3x3 T = gameObject.GetComponent<Transform>().Translate(offset);
 
-        //transform each point in the mesh to it's new position
+        //apply to all the vertices in mesh
         for (int i = 0; i < vertices.Length; i++)
         {
-            vertices[i] = T.MultiplyPoint(vertices[i]);
+            vertices[i] = M.MultiplyPoint(vertices[i]);
         }
 
         //set the vertices in the mesh to their new position
         mesh.vertices = vertices;
 
-        pos1 = T.MultiplyPoint(pos1);
-        pos2 = T.MultiplyPoint(pos2);
+        
 
     }
 }
