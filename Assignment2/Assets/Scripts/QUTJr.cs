@@ -18,7 +18,7 @@ public class QUTJr : MonoBehaviour
     public float speed = 1f;
 
     //set positions to move between
-    private Vector3 pos1;
+    private Vector3 pos1 = new Vector3(-9,0,0);
     private Vector3 pos2;
 
     public Vector3 offset;
@@ -28,13 +28,15 @@ public class QUTJr : MonoBehaviour
     {
         DrawLimb();
 
+        //MoveByOffSet(pos1);
         //set the positions
-        pos1 = new Vector3(-9, 0, 0);
-        pos2 = new Vector3(9, 0, 0);
+        //pos1 = new Vector3(-9, 0, 0);
+        //pos2 = new Vector3(9, 0, 0);
 
 
         //move the child to the joint location
-        /*if (child != null)
+        /*
+        if (child != null)
         {
             child.GetComponent<QUTJr>().MoveByOffSet(jointOffset);
         }*/
@@ -50,7 +52,7 @@ public class QUTJr : MonoBehaviour
         //recalculate the bounds of the mesh
         mesh.RecalculateBounds();
 
-        Walking(pos1);
+        //Walking(pos1);
     }
 
     private void DrawLimb()
@@ -61,8 +63,6 @@ public class QUTJr : MonoBehaviour
 
         //get the mesh from the mesh filter
         mesh = GetComponent<MeshFilter>().mesh;
-
-
 
         //clear all vertex and index data from the mesh
         mesh.Clear();
@@ -87,8 +87,8 @@ public class QUTJr : MonoBehaviour
         //set vertex indices
         mesh.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
     }
-
-    /*public void MoveByOffSet(Vector3 offset)
+    /*
+    public void MoveByOffSet(Vector3 offset)
     {
         //get the vertices from the matrix
         Vector3[] vertices = mesh.vertices;
@@ -112,7 +112,7 @@ public class QUTJr : MonoBehaviour
             child.GetComponent<QUTJr>().MoveByOffSet(offset);
         }
     }*/
-
+    /*
     public void Walking(Vector3 pos)
     {
         Matrix3x3 T1 = gameObject.GetComponent<Transform>().Translate(-pos);
@@ -135,7 +135,5 @@ public class QUTJr : MonoBehaviour
         //set the vertices in the mesh to their new position
         mesh.vertices = vertices;
 
-        
-
-    }
+    }*/
 }
