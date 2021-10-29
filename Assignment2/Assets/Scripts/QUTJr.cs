@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QUTJr : MonoBehaviour
 {
@@ -19,8 +20,10 @@ public class QUTJr : MonoBehaviour
     public float speed = 1f;
 
     //set positions to move between
-    private Vector3 pos1 = new Vector3(-9,0,0);
-    private Vector3 pos2;
+    public Vector3 pos1;
+    public Vector3 pos2;
+    private Vector3 curPosition;
+    
 
     public Vector3 offset;
 
@@ -31,21 +34,11 @@ public class QUTJr : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //set the positions
-        //pos1 = new Vector3(-9, 0, 0);
-        //pos2 = new Vector3(9, 0, 0);
-
-
-        //move the child to the joint location
-        
         if (child != null)
         {
             child.GetComponent<QUTJr>().MoveByOffSet(jointOffset);
         }
 
-        //MoveByOffSet(jointOffset);
-
-        
     }
 
     // Update is called once per frame
@@ -60,11 +53,15 @@ public class QUTJr : MonoBehaviour
         if (child != null)
         {
             child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, angle, lastAngle);
+
         }
+
+        
+
 
         //recalculate the bounds of the mesh
         mesh.RecalculateBounds();
-        //Walking(pos1);
+        
     }
 
     private void DrawLimb()
@@ -99,16 +96,15 @@ public class QUTJr : MonoBehaviour
         //set vertex indices
         mesh.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
     }
-    
+
     public void MoveByOffSet(Vector3 offset)
     {
-        //get the vertices from the matrix
-        Vector3[] vertices = mesh.vertices;
-
         //Get the translation matrix
         Matrix3x3 T = gameObject.GetComponent<Transforms>().Translate(offset);
 
         //transform each point in the mesh to it's new position
+        Vector3[] vertices = mesh.vertices;
+
         for (int i = 0; i < vertices.Length; i++)
         {
             vertices[i] = T.MultiplyPoint(vertices[i]);
@@ -117,26 +113,30 @@ public class QUTJr : MonoBehaviour
         //set the vertices in the mesh to their new position
         mesh.vertices = vertices;
 
+        //apply transformation to joint
         jointLocation = T.MultiplyPoint(jointLocation);
 
+        //apply transformation to children
         if (child != null)
         {
             child.GetComponent<QUTJr>().MoveByOffSet(offset);
         }
     }
-    /*
-    public void Walking(Vector3 pos)
+
+    /*public void Walking(Vector3 pos1, Vector3 pos2)
     {
-        Matrix3x3 T1 = gameObject.GetComponent<Transform>().Translate(-pos);
+        Matrix3x3 T1 = gameObject.GetComponent<Transforms>().Translate(-pos1);
 
-        Matrix3x3 T2 = gameObject.GetComponent<Transform>().Translate(pos);
+        Matrix3x3 T2 = gameObject.GetComponent<Transforms>().Translate(pos2);
 
-        Matrix3x3 M = T1 * T2 * Time.deltaTime;
+        Matrix3x3 M = T1 * T2;
 
         Vector3[] vertices = mesh.vertices;
 
         //Get the translation matrix
-        //Matrix3x3 T = gameObject.GetComponent<Transform>().Translate(offset);
+        //Matrix3x3 T = gameObject.GetComponent<Transforms>().Translate(offset);
+
+        Vector3[] Vertices = mesh.vertices;
 
         //apply to all the vertices in mesh
         for (int i = 0; i < vertices.Length; i++)
@@ -147,6 +147,15 @@ public class QUTJr : MonoBehaviour
         //set the vertices in the mesh to their new position
         mesh.vertices = vertices;
 
+
+        pos1 = M.MultiplyPoint(pos1);
+
+        if (child != null)
+        {
+            child.GetComponent<QUTJr>().Walking(pos1, pos2);
+        }
+
+        
     }*/
 
     public void RotateAroundPoint(Vector3 point, float angle, float lastAngle)
