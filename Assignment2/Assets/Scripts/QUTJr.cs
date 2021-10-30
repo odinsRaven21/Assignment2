@@ -24,12 +24,10 @@ public class QUTJr : MonoBehaviour
     public Vector3 pos2;
     private Vector3 curPosition;
 
-    public float xleft = -1;
-    public float xright = 5;
-    
     public Vector3 offset;
     public bool goRight = true;
-    public float currentPos;
+    public bool goUp = true;
+    public Vector3 currentPos;
 
     void Awake()
     {
@@ -88,7 +86,7 @@ public class QUTJr : MonoBehaviour
                 pos = new Vector3(0.01f, 0f, 1f);
                 MoveByOffSet(pos);
             }
-            currentPos += 0.01f;
+            currentPos.x += 0.01f;
         }
         if (goRight == false)
         {
@@ -97,17 +95,46 @@ public class QUTJr : MonoBehaviour
                 pos = new Vector3(-0.01f, 0f, 1f);
                 MoveByOffSet(pos);
             }
-            currentPos -= 0.01f;
-        }
-        if (currentPos >= 15)
-        {
-            goRight = false;
-            //gameObject.GetComponent<Transforms>().Scale(-1);
+            currentPos.x -= 0.01f;
         }
 
-        if (currentPos <= 2)
+        if (goUp == true)
+        {
+            if (gameObject.tag == "base")
+            {
+                pos = new Vector3(0f, 0.01f, 1f);
+                MoveByOffSet(pos);
+            }
+            currentPos.y += 0.01f;
+        }
+
+        if (goUp == false)
+        {
+            if (gameObject.tag == "base")
+            {
+                pos = new Vector3(0f, -0.01f, 1f);
+                MoveByOffSet(pos);
+            }
+            currentPos.y -= 0.01f;
+        }
+
+        if (currentPos.x >= 15)
+        {
+            goRight = false;
+        }
+
+        if (currentPos.x <= 2)
         {
             goRight = true;
+        }
+
+        if (currentPos.y >= 0.5)
+        {
+            goUp = false;
+        }
+        if (currentPos.y <= 0)
+        {
+            goUp = true;
         }
 
     }
@@ -171,6 +198,7 @@ public class QUTJr : MonoBehaviour
         }
     }
 
+   
     /*public void Walking(Vector3 pos1, Vector3 pos2)
     {
         Matrix3x3 T1 = gameObject.GetComponent<Transforms>().Translate(-pos1);
