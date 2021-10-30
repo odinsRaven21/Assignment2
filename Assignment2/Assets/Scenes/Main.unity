@@ -206,6 +206,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &718577433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 718577435}
+  - component: {fileID: 718577434}
+  m_Layer: 0
+  m_Name: Walk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &718577434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718577433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b5e4ea6529d144f8df7b9936b1dceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0
+--- !u!4 &718577435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718577433}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9, y: -2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1047288658
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +263,7 @@ GameObject:
   - component: {fileID: 1047288661}
   m_Layer: 0
   m_Name: Base
-  m_TagString: Untagged
+  m_TagString: base
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -237,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 1141156329}
-  control: {fileID: 0}
+  control: {fileID: 718577433}
   mesh: {fileID: 0}
   jointLocation: {x: 0, y: 0, z: 1}
   jointOffset: {x: 0, y: 0, z: 0}
@@ -249,7 +293,13 @@ MonoBehaviour:
   - {x: 1, y: 0, z: 1}
   - {x: 1, y: -1, z: 1}
   speed: 1
+  pos1: {x: 0, y: 0, z: 0}
+  pos2: {x: 0, y: 0, z: 0}
+  xleft: -20
+  xright: 20
   offset: {x: 0, y: 0, z: 0}
+  goRight: 1
+  currentPos: 0
 --- !u!4 &1047288660
 Transform:
   m_ObjectHideFlags: 0
@@ -289,7 +339,7 @@ GameObject:
   - component: {fileID: 1141156332}
   m_Layer: 0
   m_Name: Lower Arm
-  m_TagString: Untagged
+  m_TagString: lowerarm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -319,7 +369,13 @@ MonoBehaviour:
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
   speed: 1
+  pos1: {x: 0, y: 0, z: 0}
+  pos2: {x: 0, y: 0, z: 0}
+  xleft: -20
+  xright: 20
   offset: {x: 0, y: 0, z: 0}
+  goRight: 1
+  currentPos: 0
 --- !u!4 &1141156331
 Transform:
   m_ObjectHideFlags: 0
@@ -389,7 +445,13 @@ MonoBehaviour:
   - {x: 1.8, y: 0.4, z: 1}
   - {x: 1, y: 1, z: 1}
   speed: 1
+  pos1: {x: 0, y: 0, z: 0}
+  pos2: {x: 0, y: 0, z: 0}
+  xleft: -20
+  xright: 20
   offset: {x: 0, y: 0, z: 0}
+  goRight: 1
+  currentPos: 0
 --- !u!4 &1184525005
 Transform:
   m_ObjectHideFlags: 0
@@ -429,7 +491,7 @@ GameObject:
   - component: {fileID: 1296875353}
   m_Layer: 0
   m_Name: Upper Arm
-  m_TagString: Untagged
+  m_TagString: upperarm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -459,7 +521,13 @@ MonoBehaviour:
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
   speed: 1
+  pos1: {x: 0, y: 0, z: 0}
+  pos2: {x: 0, y: 0, z: 0}
+  xleft: -20
+  xright: 20
   offset: {x: 0, y: 0, z: 0}
+  goRight: 1
+  currentPos: 0
 --- !u!4 &1296875352
 Transform:
   m_ObjectHideFlags: 0

@@ -23,14 +23,19 @@ public class QUTJr : MonoBehaviour
     public Vector3 pos1;
     public Vector3 pos2;
     private Vector3 curPosition;
-    
 
+    public float xleft = -1;
+    public float xright = 5;
+    
     public Vector3 offset;
+    public bool goRight = true;
+    public float currentPos;
 
     void Awake()
     {
         DrawLimb();
     }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +43,6 @@ public class QUTJr : MonoBehaviour
         {
             child.GetComponent<QUTJr>().MoveByOffSet(jointOffset);
         }
-
     }
 
     // Update is called once per frame
@@ -48,20 +52,64 @@ public class QUTJr : MonoBehaviour
         lastAngle = angle;
         if (control != null)
         {
-            angle = control.GetComponent<controller>().value;
+            if (gameObject.tag == "upperarm") 
+            {
+                angle = control.GetComponent<controller>().value;
+            }
+            if (gameObject.tag == "base")
+            {
+                angle = control.GetComponent<Walking>().value;
+            }
+            
         }
+
+
+        WalkBase();
+
         if (child != null)
         {
             child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, angle, lastAngle);
 
         }
 
-        
-
 
         //recalculate the bounds of the mesh
         mesh.RecalculateBounds();
         
+    }
+
+    private void WalkBase()
+    {
+        Vector3 pos;
+        if (goRight == true)
+        {
+            if (gameObject.tag == "base")
+            {
+                pos = new Vector3(0.01f, 0f, 1f);
+                MoveByOffSet(pos);
+            }
+            currentPos += 0.01f;
+        }
+        if (goRight == false)
+        {
+            if (gameObject.tag == "base")
+            {
+                pos = new Vector3(-0.01f, 0f, 1f);
+                MoveByOffSet(pos);
+            }
+            currentPos -= 0.01f;
+        }
+        if (currentPos >= 15)
+        {
+            goRight = false;
+            //gameObject.GetComponent<Transforms>().Scale(-1);
+        }
+
+        if (currentPos <= 2)
+        {
+            goRight = true;
+        }
+
     }
 
     private void DrawLimb()
@@ -184,10 +232,5 @@ public class QUTJr : MonoBehaviour
         {
             child.GetComponent<QUTJr>().RotateAroundPoint(point, angle, lastAngle);
         }
-    }
-
-    public void HeadWobble()
-    {
-
     }
 }

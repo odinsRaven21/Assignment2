@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Walking : MonoBehaviour
 {
-    public Vector3 position;
-
+    public float value;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        value = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        position = Vector3.Lerp(gameObject.GetComponent<QUTJr>().pos1, gameObject.GetComponent<QUTJr>().pos2, 1);
+        
     }
+
 }
