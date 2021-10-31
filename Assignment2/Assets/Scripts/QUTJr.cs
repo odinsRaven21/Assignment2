@@ -137,6 +137,20 @@ public class QUTJr : MonoBehaviour
             goUp = true;
         }
 
+        //key input controls
+        if (Input.GetKeyDown("a"))
+        {
+            goRight = false;
+        }
+        else if (Input.GetKeyDown("d"))
+        {
+            goRight = true;
+        }
+        else if (Input.GetKeyDown("w"))
+        {
+            goUp = true;
+        }
+
     }
 
     private void DrawLimb()
