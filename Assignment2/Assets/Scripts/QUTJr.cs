@@ -140,15 +140,27 @@ public class QUTJr : MonoBehaviour
         //key input controls
         if (Input.GetKeyDown("a"))
         {
+            //go left
             goRight = false;
         }
         else if (Input.GetKeyDown("d"))
         {
+            //go right
             goRight = true;
         }
         else if (Input.GetKeyDown("w"))
         {
+            //jump
             goUp = true;
+        }
+        else if (Input.GetKeyDown("s"))
+        {
+            //jump forward
+        }
+        else if (Input.GetKeyDown("z"))
+        {
+            //stop moving
+
         }
 
     }
@@ -213,40 +225,7 @@ public class QUTJr : MonoBehaviour
     }
 
    
-    /*public void Walking(Vector3 pos1, Vector3 pos2)
-    {
-        Matrix3x3 T1 = gameObject.GetComponent<Transforms>().Translate(-pos1);
-
-        Matrix3x3 T2 = gameObject.GetComponent<Transforms>().Translate(pos2);
-
-        Matrix3x3 M = T1 * T2;
-
-        Vector3[] vertices = mesh.vertices;
-
-        //Get the translation matrix
-        //Matrix3x3 T = gameObject.GetComponent<Transforms>().Translate(offset);
-
-        Vector3[] Vertices = mesh.vertices;
-
-        //apply to all the vertices in mesh
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            vertices[i] = M.MultiplyPoint(vertices[i]);
-        }
-
-        //set the vertices in the mesh to their new position
-        mesh.vertices = vertices;
-
-
-        pos1 = M.MultiplyPoint(pos1);
-
-        if (child != null)
-        {
-            child.GetComponent<QUTJr>().Walking(pos1, pos2);
-        }
-
-        
-    }*/
+    
 
     public void RotateAroundPoint(Vector3 point, float angle, float lastAngle)
     {
