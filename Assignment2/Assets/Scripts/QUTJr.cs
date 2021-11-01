@@ -8,6 +8,7 @@ public class QUTJr : MonoBehaviour
     public GameObject child;
     public GameObject control;
     public Mesh mesh;
+    public Material material;
 
     public Vector3 jointLocation;
     public Vector3 jointOffset;
@@ -17,13 +18,9 @@ public class QUTJr : MonoBehaviour
     public Vector3[] limbVertexLocations;
 
     //set movement speed
-    public float speed = 1f;
+    //public float speed = 1f;
 
-    //set positions to move between
-    public Vector3 pos1;
-    public Vector3 pos2;
-    private Vector3 curPosition;
-
+    
     public Vector3 offset;
     public bool goRight = true;
     public bool goUp = true;
@@ -192,6 +189,9 @@ public class QUTJr : MonoBehaviour
 
         //get the mesh from the mesh filter
         mesh = GetComponent<MeshFilter>().mesh;
+
+        //set the material
+        GetComponent<MeshRenderer>().material = material;
 
         //clear all vertex and index data from the mesh
         mesh.Clear();
