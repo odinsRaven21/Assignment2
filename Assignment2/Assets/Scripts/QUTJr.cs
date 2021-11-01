@@ -27,6 +27,7 @@ public class QUTJr : MonoBehaviour
     public Vector3 offset;
     public bool goRight = true;
     public bool goUp = true;
+    public bool move = true;
     public Vector3 currentPos;
 
     void Awake()
@@ -79,25 +80,32 @@ public class QUTJr : MonoBehaviour
     private void WalkBase()
     {
         Vector3 pos;
-        if (goRight == true)
+        //walking
+        if (move == true)
         {
-            if (gameObject.tag == "base")
+            //walks to the right
+            if (goRight == true)
             {
-                pos = new Vector3(0.01f, 0f, 1f);
-                MoveByOffSet(pos);
+                if (gameObject.tag == "base")
+                {
+                    pos = new Vector3(0.01f, 0f, 1f);
+                    MoveByOffSet(pos);
+                }
+                currentPos.x += 0.01f;
             }
-            currentPos.x += 0.01f;
-        }
-        if (goRight == false)
-        {
-            if (gameObject.tag == "base")
+            //walks to the left
+            if (goRight == false)
             {
-                pos = new Vector3(-0.01f, 0f, 1f);
-                MoveByOffSet(pos);
+                if (gameObject.tag == "base")
+                {
+                    pos = new Vector3(-0.01f, 0f, 1f);
+                    MoveByOffSet(pos);
+                }
+                currentPos.x -= 0.01f;
             }
-            currentPos.x -= 0.01f;
         }
-
+        
+        //jumps
         if (goUp == true)
         {
             if (gameObject.tag == "base")
@@ -107,7 +115,7 @@ public class QUTJr : MonoBehaviour
             }
             currentPos.y += 0.01f;
         }
-
+        //falls
         if (goUp == false)
         {
             if (gameObject.tag == "base")
@@ -118,6 +126,7 @@ public class QUTJr : MonoBehaviour
             currentPos.y -= 0.01f;
         }
 
+        //controls direction of QUT Jr walking
         if (currentPos.x >= 15)
         {
             goRight = false;
@@ -128,6 +137,7 @@ public class QUTJr : MonoBehaviour
             goRight = true;
         }
 
+        //controls jump of QUT Jr
         if (currentPos.y >= 0.5)
         {
             goUp = false;
@@ -141,17 +151,21 @@ public class QUTJr : MonoBehaviour
         if (Input.GetKeyDown("a"))
         {
             //go left
+            move = true;
             goRight = false;
         }
         else if (Input.GetKeyDown("d"))
         {
             //go right
+            move = true;
             goRight = true;
         }
         else if (Input.GetKeyDown("w"))
         {
-            //jump
+            //jumps on spot
+            move = false;
             goUp = true;
+            goUp = false;
         }
         else if (Input.GetKeyDown("s"))
         {
@@ -160,9 +174,14 @@ public class QUTJr : MonoBehaviour
         else if (Input.GetKeyDown("z"))
         {
             //stop moving
-
+            move = false;
         }
 
+        if (Input.GetKeyUp("w"))
+        {
+            //returns QUT Jr continually walking left and right
+            move = true;
+        }
     }
 
     private void DrawLimb()
