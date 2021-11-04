@@ -22,16 +22,15 @@ public class QUTJr : MonoBehaviour
 
     
     public Vector3 offset;
-    public bool goRight = true;
-    public bool goUp = true;
-    public bool move = true;
-    public bool jump = true;
-    public bool jumpForward = false;
-    public bool up = true;
+    private bool goRight = true;
+    private bool goUp = true;
+    private bool move = true;
+    private bool jump = true;
+    private bool jumpForward = false;
+    private bool up = true;
     public bool nod = true;
     public Vector3 currentPos;
     public float distanceCovered = 0;
-    public float distanceCoveredTotal = 1.6f;
 
     void Awake()
     {
@@ -94,17 +93,18 @@ public class QUTJr : MonoBehaviour
         }
         else if (Input.GetKeyDown("s"))
         {
+            //jumps forward
             jumpForward = true;
             move = false;
             jump = false;
-            Jump();
+            
         }
         else if (Input.GetKeyDown("z"))
         {
             //stop moving
             move = false;
             jump = false;
-
+            nod = false;
         }
 
         if (Input.GetKeyUp("w") && jumpForward == false)
@@ -113,6 +113,11 @@ public class QUTJr : MonoBehaviour
             move = true;
         }
 
+        //controls jumping forward
+        if (jumpForward == true)
+        {
+            Jump();
+        }
         
 
         if (child != null)

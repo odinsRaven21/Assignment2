@@ -25,7 +25,12 @@ public class QUTJr2 : MonoBehaviour
     public bool goRight = true;
     public bool goUp = true;
     public bool move = true;
+    private bool jump = true;
+    private bool jumpForward = false;
+    private bool up = true;
+    public bool nod = true;
     public Vector3 currentPos;
+    public float distanceCovered = 0;
 
     void Awake()
     {
@@ -48,10 +53,14 @@ public class QUTJr2 : MonoBehaviour
         lastAngle = angle;
         if (control != null)
         {
-            if (gameObject.tag == "upperarm") 
+            if (nod == true)
             {
-                angle = control.GetComponent<controller>().value;
+                if (gameObject.tag == "upperarm")
+                {
+                    angle = control.GetComponent<controller>().value;
+                }
             }
+            
             if (gameObject.tag == "base")
             {
                 angle = control.GetComponent<Walking>().value;
@@ -66,6 +75,51 @@ public class QUTJr2 : MonoBehaviour
         {
             child.GetComponent<QUTJr2>().RotateAroundPoint(jointLocation, angle, lastAngle);
 
+        }
+
+        //key input controls
+        if (Input.GetKeyDown("left"))
+        {
+            //go left
+            move = true;
+            goRight = false;
+        }
+        else if (Input.GetKeyDown("right"))
+        {
+            //go right
+            move = true;
+            goRight = true;
+        }
+        else if (Input.GetKeyDown("up"))
+        {
+            //jumps on spot
+            move = false;
+            goUp = true;
+            goUp = false;
+        }
+        else if (Input.GetKeyDown("down"))
+        {
+            //jumps forward
+            jumpForward = true;
+            move = false;
+            jump = false;
+        }
+        else if (Input.GetKeyDown("1"))
+        {
+            //stop moving
+            move = false;
+        }
+
+        if (Input.GetKeyUp("up") && jumpForward == false)
+        {
+            //returns QUT Jr continually walking left and right
+            move = true;
+        }
+
+        //controls jumping forward
+        if (jumpForward == true)
+        {
+            Jump();
         }
 
 
@@ -103,25 +157,38 @@ public class QUTJr2 : MonoBehaviour
         }
         
         //jumps
-        if (goUp == true)
+        if (jump == true)
         {
-            if (gameObject.tag == "base")
+            if (goUp == true)
             {
-                pos = new Vector3(0f, 0.01f, 1f);
-                MoveByOffSet(pos);
+                if (gameObject.tag == "base")
+                {
+                    pos = new Vector3(0f, 0.01f, 1f);
+                    MoveByOffSet(pos);
+                }
+                currentPos.y += 0.01f;
             }
-            currentPos.y += 0.01f;
-        }
-        //falls
-        if (goUp == false)
-        {
-            if (gameObject.tag == "base")
+            //falls
+            if (goUp == false)
             {
-                pos = new Vector3(0f, -0.01f, 1f);
-                MoveByOffSet(pos);
+                if (gameObject.tag == "base")
+                {
+                    pos = new Vector3(0f, -0.01f, 1f);
+                    MoveByOffSet(pos);
+                }
+                currentPos.y -= 0.01f;
             }
-            currentPos.y -= 0.01f;
+            //controls jump of QUT Jr
+            if (currentPos.y >= 0.5)
+            {
+                goUp = false;
+            }
+            if (currentPos.y <= 0)
+            {
+                goUp = true;
+            }
         }
+        
 
         //controls direction of QUT Jr walking
         if (currentPos.x >= 15)
@@ -133,52 +200,102 @@ public class QUTJr2 : MonoBehaviour
         {
             goRight = true;
         }
+    }
 
-        //controls jump of QUT Jr
-        if (currentPos.y >= 0.5)
+    private void Jump()
+    {
+        Vector3 offsetPos;
+        if (jumpForward == true)
         {
-            goUp = false;
-        }
-        if (currentPos.y <= 0)
-        {
-            goUp = true;
+            if (goRight == true)
+            {
+                if (up == true)
+                {
+                    offsetPos = new Vector3(0.08f, 0.2f, 1f);
+                    if (gameObject.tag == "base")
+                    {
+                        MoveByOffSet(offsetPos);
+                    }
+                    currentPos.y += 0.2f;
+                    currentPos.x += 0.08f;
+                    distanceCovered += 0.08f;
+                }
+                if (up == false)
+                {
+                    offsetPos = new Vector3(0.08f, -0.2f, 1f);
+                    if (gameObject.tag == "base")
+                    {
+                        MoveByOffSet(offsetPos);
+                    }
+                    currentPos.y -= 0.2f;
+                    currentPos.x += 0.08f;
+                    distanceCovered += 0.08f;
+                }
+            }
+            if (goRight == false)
+            {
+                if (up == true)
+                {
+                    offsetPos = new Vector3(-0.08f, 0.2f, 1f);
+                    if (gameObject.tag == "base")
+                    {
+                        MoveByOffSet(offsetPos);
+                    }
+                    currentPos.y += 0.2f;
+                    currentPos.x -= 0.08f;
+                    distanceCovered -= 0.08f;
+                }
+                if (up == false)
+                {
+                    offsetPos = new Vector3(-0.08f, -0.2f, 1f);
+                    if (gameObject.tag == "base")
+                    {
+                        MoveByOffSet(offsetPos);
+                    }
+                    currentPos.y -= 0.2f;
+                    currentPos.x -= 0.08f;
+                    distanceCovered -= 0.08f;
+                }
+
+            }
         }
 
-        //key input controls
-        if (Input.GetKeyDown("left"))
+
+        if (goRight == true)
         {
-            //go left
-            move = true;
-            goRight = false;
+            if (currentPos.y <= 0)
+            {
+                up = true;
+            }
+            if (currentPos.y >= 4)
+            {
+                up = false;
+            }
+            if (distanceCovered >= 1.6)
+            {
+                jumpForward = false;
+                move = true;
+                jump = true;
+            }
         }
-        else if (Input.GetKeyDown("right"))
+        if (goRight == false)
         {
-            //go right
-            move = true;
-            goRight = true;
-        }
-        else if (Input.GetKeyDown("up"))
-        {
-            //jumps on spot
-            move = false;
-            goUp = true;
-            goUp = false;
-        }
-        else if (Input.GetKeyDown("down"))
-        {
-            //jump forward
-        }
-        else if (Input.GetKeyDown("1"))
-        {
-            //stop moving
-            move = false;
+            if (currentPos.y <= 0)
+            {
+                up = true;
+            }
+            if (currentPos.y >= 4)
+            {
+                up = false;
+            }
+            if (distanceCovered <= -1.6)
+            {
+                jumpForward = false;
+                move = true;
+                jump = true;
+            }
         }
 
-        if (Input.GetKeyUp("2"))
-        {
-            //returns QUT Jr continually walking left and right
-            move = true;
-        }
     }
 
     private void DrawLimb()
