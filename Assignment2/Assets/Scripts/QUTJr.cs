@@ -28,8 +28,10 @@ public class QUTJr : MonoBehaviour
     public bool jump = true;
     public bool jumpForward = false;
     public bool up = true;
-    
+    public bool nod = true;
     public Vector3 currentPos;
+    public float distanceCovered = 0;
+    public float distanceCoveredTotal = 1.6f;
 
     void Awake()
     {
@@ -43,6 +45,7 @@ public class QUTJr : MonoBehaviour
         {
             child.GetComponent<QUTJr>().MoveByOffSet(jointOffset);
         }
+        
     }
 
     // Update is called once per frame
@@ -52,31 +55,71 @@ public class QUTJr : MonoBehaviour
         lastAngle = angle;
         if (control != null)
         {
-            if (gameObject.tag == "upperarm") 
+            if (nod == true)
             {
-                angle = control.GetComponent<controller>().value;
+                if (gameObject.tag == "upperarm")
+                {
+                    angle = control.GetComponent<controller>().value;
+                }
             }
             if (gameObject.tag == "base")
             {
                 angle = control.GetComponent<Walking>().value;
             }
             
-        }    
-
+        }
 
         WalkBase();
 
-    
         
-    
 
+        //key input controls
+        if (Input.GetKeyDown("a"))
+        {
+            //go left
+            move = true;
+            goRight = false;
+        }
+        else if (Input.GetKeyDown("d"))
+        {
+            //go right
+            move = true;
+            goRight = true;
+        }
+        else if (Input.GetKeyDown("w"))
+        {
+            //jumps on spot
+            move = false;
+            jump = true;
+        }
+        else if (Input.GetKeyDown("s"))
+        {
+            jumpForward = true;
+            move = false;
+            jump = false;
+            Jump();
+        }
+        else if (Input.GetKeyDown("z"))
+        {
+            //stop moving
+            move = false;
+            jump = false;
+
+        }
+
+        if (Input.GetKeyUp("w") && jumpForward == false)
+        {
+            //returns QUT Jr continually walking left and right
+            move = true;
+        }
+
+        
 
         if (child != null)
         {
             child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, angle, lastAngle);
 
         }
-
 
         //recalculate the bounds of the mesh
         mesh.RecalculateBounds();
@@ -145,7 +188,6 @@ public class QUTJr : MonoBehaviour
             }
         }
 
-
         //controls direction of QUT Jr walking
         if (currentPos.x >= 15)
         {
@@ -157,138 +199,102 @@ public class QUTJr : MonoBehaviour
             goRight = true;
         }
 
-        //key input controls
-        if (Input.GetKeyDown("a"))
-        {
-            //go left
-            move = true;
-            goRight = false;
-        }
-        else if (Input.GetKeyDown("d"))
-        {
-            //go right
-            move = true;
-            goRight = true;
-        }
-        else if (Input.GetKeyDown("w"))
-        {
-            //jumps on spot
-            move = false;
-            jump = true;
-        }
-        else if (Input.GetKeyDown("s"))
-        {
-            jumpForward = true;
-            move = false;
-            jump = false;
-            float frame = 0;
-            float endFrame = 3;
-            while(frame < endFrame)
-            {
-                Jump();
-                frame += 1;
-            }
-            
-        }
-        else if (Input.GetKeyDown("z"))
-        {
-            //stop moving
-            move = false;
-            jump = false;
-
-        }
-
-        if (Input.GetKeyUp("w") && jumpForward == false)
-        {
-            //returns QUT Jr continually walking left and right
-            move = true;
-        }
     }
 
     private void Jump()
     {
         Vector3 offsetPos;
-        float distanceCovered = 3.2f;
-        float finalPos = currentPos.x + distanceCovered;
-        if (jump == false && move == false)
+        if (jumpForward == true)
         {
             if (goRight == true)
             {
-                    if (up == true)
-                    {
-                        offsetPos = new Vector3(0.08f, 0.2f, 1f);
-                        if (gameObject.tag == "base")
-                        {
-                            MoveByOffSet(offsetPos);
-                        }
-                        currentPos.y += 0.2f;
-                        currentPos.x += 0.08f;
-                    }
-                    if (up == false)
-                    {
-                        offsetPos = new Vector3(0.08f, -0.2f, 1f);
-                        if (gameObject.tag == "base")
-                        {
-                            MoveByOffSet(offsetPos);
-                        }
-                        currentPos.y -= 0.2f;
-                        currentPos.x += 0.08f;
-                    }
-                    if (currentPos.y <= 0)
-                    {
-                        up = true;
-                    }
-                    if (currentPos.y >= 4)
-                    {
-                        up = false;
-                    }
-                if (currentPos.x >= finalPos)
+                if (up == true)
                 {
-                    jumpForward = false;
-                    move = true;
-                    jump = true;
+                    offsetPos = new Vector3(0.08f, 0.2f, 1f);
+                    if (gameObject.tag == "base")
+                    {
+                        MoveByOffSet(offsetPos);
+                    }
+                    currentPos.y += 0.2f;
+                    currentPos.x += 0.08f;
+                    distanceCovered += 0.08f;
+                }
+                if (up == false)
+                {
+                    offsetPos = new Vector3(0.08f, -0.2f, 1f);
+                    if (gameObject.tag == "base")
+                    {
+                        MoveByOffSet(offsetPos);
+                    }
+                    currentPos.y -= 0.2f;
+                    currentPos.x += 0.08f;
+                    distanceCovered += 0.08f;
                 }
             }
             if (goRight == false)
             {
-                    if (up == true)
+                if (up == true)
+                {
+                    offsetPos = new Vector3(-0.08f, 0.2f, 1f);
+                    if (gameObject.tag == "base")
                     {
-                        offsetPos = new Vector3(-0.08f, 0.2f, 1f);
-                        if (gameObject.tag == "base")
-                        {
-                            MoveByOffSet(offsetPos);
-                        }
-                        currentPos.y += 0.2f;
-                        currentPos.x -= 0.08f;
+                        MoveByOffSet(offsetPos);
                     }
-                    if (up == false)
+                    currentPos.y += 0.2f;
+                    currentPos.x -= 0.08f;
+                    distanceCovered -= 0.08f;
+                }
+                if (up == false)
+                {
+                    offsetPos = new Vector3(-0.08f, -0.2f, 1f);
+                    if (gameObject.tag == "base")
                     {
-                        offsetPos = new Vector3(-0.08f, -0.2f, 1f);
-                        if (gameObject.tag == "base")
-                        {
-                            MoveByOffSet(offsetPos);
-                        }
-                        currentPos.y -= 0.2f;
-                        currentPos.x -= 0.08f;
+                        MoveByOffSet(offsetPos);
                     }
-                    if (currentPos.y <= 0)
-                    {
-                        up = true;
-                    }
-                    if (currentPos.y >= 4)
-                    {
-                        up = false;
-                    }
+                    currentPos.y -= 0.2f;
+                    currentPos.x -= 0.08f;
+                    distanceCovered -= 0.08f;
                 }
 
-                if (currentPos.x <= -finalPos)
-                {
-                    jumpForward = false;
-                    move = true;
-                    jump = true;
-                }
-            
+            }
         }
+            
+
+        if (goRight == true)
+        {
+            if (currentPos.y <= 0)
+            {
+                up = true;
+            }
+            if (currentPos.y >= 4)
+            {
+                up = false;
+            }
+            if (distanceCovered >= 1.6)
+            {
+                jumpForward = false;
+                move = true;
+                jump = true;
+            }
+        }
+        if (goRight == false)
+        {
+            if(currentPos.y <= 0)
+                    {
+                up = true;
+            }
+            if (currentPos.y >= 4)
+            {
+                up = false;
+            }
+            if (distanceCovered <= -1.6)
+            {
+                jumpForward = false;
+                move = true;
+                jump = true;
+            }
+        }
+        
     }
 
     private void DrawLimb()
