@@ -26,6 +26,9 @@ public class QUTJr : MonoBehaviour
     public bool goUp = true;
     public bool move = true;
     public bool jump = true;
+    public bool jumpForward = false;
+    public bool up = true;
+    
     public Vector3 currentPos;
 
     void Awake()
@@ -58,12 +61,15 @@ public class QUTJr : MonoBehaviour
                 angle = control.GetComponent<Walking>().value;
             }
             
-        }
+        }    
 
 
         WalkBase();
 
+    
         
+    
+
 
         if (child != null)
         {
@@ -104,7 +110,7 @@ public class QUTJr : MonoBehaviour
                 currentPos.x -= 0.01f;
             }
         }
-        
+
         //jumps
         if (jump == true)
         {
@@ -127,8 +133,18 @@ public class QUTJr : MonoBehaviour
                 }
                 currentPos.y -= 0.01f;
             }
+
+            //controls jump of QUT Jr
+            if (currentPos.y >= 0.5)
+            {
+                goUp = false;
+            }
+            if (currentPos.y <= 0)
+            {
+                goUp = true;
+            }
         }
-        
+
 
         //controls direction of QUT Jr walking
         if (currentPos.x >= 15)
@@ -139,16 +155,6 @@ public class QUTJr : MonoBehaviour
         if (currentPos.x <= 2)
         {
             goRight = true;
-        }
-
-        //controls jump of QUT Jr
-        if (currentPos.y >= 0.5)
-        {
-            goUp = false;
-        }
-        if (currentPos.y <= 0)
-        {
-            goUp = true;
         }
 
         //key input controls
@@ -172,47 +178,116 @@ public class QUTJr : MonoBehaviour
         }
         else if (Input.GetKeyDown("s"))
         {
-            //jump forward
+            jumpForward = true;
             move = false;
             jump = false;
-            //walks to the right
-            //float positions = 30;
-            if (goRight == true)
+            float frame = 0;
+            float endFrame = 3;
+            while(frame < endFrame)
             {
-                if (gameObject.tag == "base")
-                {
-                   pos = new Vector3(2.5f, 4f, 1f);
-                   MoveByOffSet(pos);
-                   pos = new Vector3(2.5f, -4f, 1f);
-                   MoveByOffSet(pos);
-                }
-                currentPos.x += 5f;
+                Jump();
+                frame += 1;
             }
-            //walks to the left
-            if (goRight == false)
-            {
-                if (gameObject.tag == "base")
-                {
-                   pos = new Vector3(-2.5f, 4f, 1f);
-                   MoveByOffSet(pos);
-                   pos = new Vector3(-2.5f, -4f, 1f);
-                   MoveByOffSet(pos);
-                }
-                currentPos.x -= 5f;
-            }
-            move = true;
-            jump = true;
+            
         }
         else if (Input.GetKeyDown("z"))
         {
             //stop moving
             move = false;
+            jump = false;
+
         }
 
-        if (Input.GetKeyUp("w"))
+        if (Input.GetKeyUp("w") && jumpForward == false)
         {
             //returns QUT Jr continually walking left and right
             move = true;
+        }
+    }
+
+    private void Jump()
+    {
+        Vector3 offsetPos;
+        float distanceCovered = 3.2f;
+        float finalPos = currentPos.x + distanceCovered;
+        if (jump == false && move == false)
+        {
+            if (goRight == true)
+            {
+                    if (up == true)
+                    {
+                        offsetPos = new Vector3(0.08f, 0.2f, 1f);
+                        if (gameObject.tag == "base")
+                        {
+                            MoveByOffSet(offsetPos);
+                        }
+                        currentPos.y += 0.2f;
+                        currentPos.x += 0.08f;
+                    }
+                    if (up == false)
+                    {
+                        offsetPos = new Vector3(0.08f, -0.2f, 1f);
+                        if (gameObject.tag == "base")
+                        {
+                            MoveByOffSet(offsetPos);
+                        }
+                        currentPos.y -= 0.2f;
+                        currentPos.x += 0.08f;
+                    }
+                    if (currentPos.y <= 0)
+                    {
+                        up = true;
+                    }
+                    if (currentPos.y >= 4)
+                    {
+                        up = false;
+                    }
+                if (currentPos.x >= finalPos)
+                {
+                    jumpForward = false;
+                    move = true;
+                    jump = true;
+                }
+            }
+            if (goRight == false)
+            {
+                    if (up == true)
+                    {
+                        offsetPos = new Vector3(-0.08f, 0.2f, 1f);
+                        if (gameObject.tag == "base")
+                        {
+                            MoveByOffSet(offsetPos);
+                        }
+                        currentPos.y += 0.2f;
+                        currentPos.x -= 0.08f;
+                    }
+                    if (up == false)
+                    {
+                        offsetPos = new Vector3(-0.08f, -0.2f, 1f);
+                        if (gameObject.tag == "base")
+                        {
+                            MoveByOffSet(offsetPos);
+                        }
+                        currentPos.y -= 0.2f;
+                        currentPos.x -= 0.08f;
+                    }
+                    if (currentPos.y <= 0)
+                    {
+                        up = true;
+                    }
+                    if (currentPos.y >= 4)
+                    {
+                        up = false;
+                    }
+                }
+
+                if (currentPos.x <= -finalPos)
+                {
+                    jumpForward = false;
+                    move = true;
+                    jump = true;
+                }
+            
         }
     }
 
