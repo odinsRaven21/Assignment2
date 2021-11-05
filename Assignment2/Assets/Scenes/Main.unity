@@ -193,10 +193,10 @@ MonoBehaviour:
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
   offset: {x: 0, y: 0, z: 0}
-  goRight: 1
-  goUp: 1
-  move: 1
+  nod: 1
   currentPos: {x: 0, y: 0, z: 0}
+  distanceCovered: 0
+  collapse: 0
 --- !u!1 &89626382
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,10 +267,10 @@ MonoBehaviour:
   - {x: 1, y: 0, z: 1}
   - {x: 1, y: -1, z: 1}
   offset: {x: 0, y: 0, z: 0}
-  goRight: 1
-  goUp: 1
-  move: 1
+  nod: 1
   currentPos: {x: 0, y: 0, z: 0}
+  distanceCovered: 0
+  collapse: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,10 +433,10 @@ MonoBehaviour:
   - {x: 1, y: 0, z: 1}
   - {x: 1, y: -1, z: 1}
   offset: {x: 0, y: 0, z: 0}
-  goRight: 1
-  goUp: 1
-  move: 1
+  nod: 1
   currentPos: {x: 0, y: 0, z: 0}
+  distanceCovered: 0
+  collapse: 0
 --- !u!4 &1047288660
 Transform:
   m_ObjectHideFlags: 0
@@ -507,10 +507,10 @@ MonoBehaviour:
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
   offset: {x: 0, y: 0, z: 0}
-  goRight: 1
-  goUp: 1
-  move: 1
+  nod: 1
   currentPos: {x: 0, y: 0, z: 0}
+  distanceCovered: 0
+  collapse: 0
 --- !u!4 &1141156331
 Transform:
   m_ObjectHideFlags: 0
@@ -625,10 +625,10 @@ MonoBehaviour:
   - {x: 1.8, y: 0.4, z: 1}
   - {x: 1, y: 1, z: 1}
   offset: {x: 0, y: 0, z: 0}
-  goRight: 1
-  goUp: 1
-  move: 1
+  nod: 1
   currentPos: {x: 0, y: 0, z: 0}
+  distanceCovered: 0
+  collapse: 0
 --- !u!4 &1184525005
 Transform:
   m_ObjectHideFlags: 0
@@ -699,10 +699,10 @@ MonoBehaviour:
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
   offset: {x: 0, y: 0, z: 0}
-  goRight: 1
-  goUp: 1
-  move: 1
+  nod: 1
   currentPos: {x: 0, y: 0, z: 0}
+  distanceCovered: 0
+  collapse: 0
 --- !u!4 &1296875352
 Transform:
   m_ObjectHideFlags: 0
@@ -1053,10 +1053,10 @@ MonoBehaviour:
   - {x: 1.8, y: 0.4, z: 1}
   - {x: 1, y: 1, z: 1}
   offset: {x: 0, y: 0, z: 0}
-  goRight: 1
-  goUp: 1
-  move: 1
+  nod: 1
   currentPos: {x: 0, y: 0, z: 0}
+  distanceCovered: 0
+  collapse: 0
 --- !u!1 &1730023013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,10 +1127,10 @@ MonoBehaviour:
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
   offset: {x: 0, y: 0, z: 0}
-  goRight: 1
-  goUp: 1
-  move: 1
+  nod: 1
   currentPos: {x: 0, y: 0, z: 0}
+  distanceCovered: 0
+  collapse: 0
 --- !u!1 &1822134648
 GameObject:
   m_ObjectHideFlags: 0

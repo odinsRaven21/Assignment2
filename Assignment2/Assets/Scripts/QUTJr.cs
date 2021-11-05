@@ -32,8 +32,11 @@ public class QUTJr : MonoBehaviour
     public Vector3 currentPos;
     public float distanceCovered = 0;
     public bool collapse = false;
+    bool forwardFall = false;
     float currentAngle = 0;
     float previousAngle;
+    float frames = 0;
+    bool slump = false;
 
     void Awake()
     {
@@ -54,21 +57,22 @@ public class QUTJr : MonoBehaviour
     void Update()
     {
         
-        lastAngle = angle;
+        
         if (control != null)
         {
             if (nod == true)
             {
+                lastAngle = angle;
                 if (gameObject.tag == "upperarm")
                 {
                     angle = control.GetComponent<controller>().value;
+                    if (child != null)
+                    {
+                        child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, angle, lastAngle);
+
+                    }
                 }
-            }
-            if (gameObject.tag == "base")
-            {
-                angle = control.GetComponent<Walking>().value;
-            }
-            
+            }            
         }
 
         WalkBase();
@@ -108,60 +112,7 @@ public class QUTJr : MonoBehaviour
             move = false;
             jump = false;
             nod = false;
-            //collapse = true;
-            bool forwardFall = true;
-
-            if (forwardFall == true)
-            {
-                previousAngle = currentAngle + 0.01f;
-                if (gameObject.tag == "lowerarm")
-                {
-                    RotateAroundPoint(currentPos, currentAngle, previousAngle);
-                    if (child != null)
-                    {
-                        //child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, currentAngle - 0.3f, previousAngle + 0.3f);                       
-                    }
-                }
-                if (gameObject.tag == "upperarm")
-                {
-                    RotateAroundPoint(jointLocation, currentAngle - 0.3f, previousAngle + 0.3f);
-                    if (child != null)
-                    {
-                        child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, currentAngle - 0.3f, previousAngle + 0.3f);
-                    }
-                }
-                currentAngle -= 0.01f;
-            }
-            
-
-            if (collapse == true)
-            {
-                
-                if (forwardFall == false)
-                {
-                    previousAngle = currentAngle;
-                    if (gameObject.tag == "lowerarm")
-                    {
-                        RotateAroundPoint(currentPos, currentAngle, previousAngle);
-                        currentAngle -= 0.01f;
-                    }
-                }
-                if (currentAngle <= 0.5f)
-                {
-                    forwardFall = true;
-                }
-                if (currentAngle > 0.5f)
-                {
-                    forwardFall = false;
-                    /*
-                    if (currentAngle < 0)
-                    {
-                        collapse = false;
-                        move = true;
-                        jump = true;
-                    }*/
-                }
-            }
+            collapse = true;
         }
 
         if (Input.GetKeyUp("w") && jumpForward == false && collapse == false)
@@ -179,13 +130,7 @@ public class QUTJr : MonoBehaviour
         //controls collapse
         if (collapse == true)
         {
-           
-        }
-
-        if (child != null)
-        {
-            child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, angle, lastAngle);
-
+            Collapse();
         }
 
         //recalculate the bounds of the mesh
@@ -298,6 +243,7 @@ public class QUTJr : MonoBehaviour
                     distanceCovered += 0.08f;
                 }
             }
+            
             if (goRight == false)
             {
                 if (up == true)
@@ -347,7 +293,7 @@ public class QUTJr : MonoBehaviour
         if (goRight == false)
         {
             if(currentPos.y <= 0)
-                    {
+            {
                 up = true;
             }
             if (currentPos.y >= 4)
@@ -366,48 +312,82 @@ public class QUTJr : MonoBehaviour
 
     private void Collapse()
     {
-        float currentAngle = 0;
-        float previousAngle;
-        
-        bool forwardFall = true;
-        
         if (collapse == true)
         {
-            if (forwardFall == true)
+            //character falls to the ground
+            if (currentPos.y > 0)
             {
-                previousAngle = currentAngle;
-                if (gameObject.tag == "lowerarm")
+                if (gameObject.tag == "base")
                 {
-                    RotateAroundPoint(currentPos, currentAngle, previousAngle);
-                    currentAngle += 0.01f;
+                    Vector3 goDown = new Vector3(0f, -0.01f, 1f);
+                    MoveByOffSet(goDown);
                 }
+                currentPos.y -= 0.01f;
             }
-            if (forwardFall == false)
+            //controls slumping for if character is on the ground
+            if (currentPos.y <= 0)
             {
-                previousAngle = currentAngle;
-                if (gameObject.tag == "lowerarm")
+                slump = true;
+                
+            }
+            if (slump == true)
+            {
+                //charcter slumps
+                if (forwardFall == true)
                 {
-                    RotateAroundPoint(currentPos, currentAngle, previousAngle);
-                    currentAngle -= 0.01f;
+                    previousAngle = currentAngle + 0.1f;
+                    if (gameObject.tag == "upperarm")
+                    {
+                        RotateAroundPoint(jointLocation, currentAngle, previousAngle);
+                        if (child != null)
+                        {
+                            Vector3 pos = new Vector3(0.1f, -0.01f, 1f);
+                            child.GetComponent<QUTJr>().MoveByOffSet(pos);
+                            child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, angle, lastAngle);
+                        }
+                    }
+                    currentAngle -= 0.1f;
                 }
-            }
-            if (currentAngle <= 0.5f)
-            {
-                forwardFall = true;
-            }
-            if (currentAngle > 0.5f)
-            {
-                forwardFall = false;
-                if (currentAngle < 0)
+                //character returns to standing
+                if (forwardFall == false)
                 {
-                    collapse = false;
-                    move = true;
-                    jump = true;
+                    previousAngle = currentAngle - 0.1f;
+                    if (gameObject.tag == "upperarm")
+                    {
+                        RotateAroundPoint(jointLocation, currentAngle, previousAngle);
+                        if (child != null)
+                        {
+                            Vector3 pos = new Vector3(-0.1f, -0.001f, 1f);
+                            child.GetComponent<QUTJr>().MoveByOffSet(pos);
+                            child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, angle, lastAngle);
+                        }
+                    }
+                    currentAngle += 0.1f;
                 }
+                frames += 1;
             }
         }
-        
-        
+
+        //controls the slumping
+        if (slump == true && frames <= 11f)
+        {
+            forwardFall = true;
+        }
+        if (frames > 11f && slump == true)
+        {
+            forwardFall = false;
+        }
+
+        //Character returns to moving and jumping continuously
+        if (frames >= 22f)
+        {
+            slump = false;
+            collapse = false;
+            move = true;
+            jump = true;
+            nod = true;
+            frames = 0;
+        }
     }
 
     private void DrawLimb()

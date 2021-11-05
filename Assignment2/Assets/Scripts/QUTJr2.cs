@@ -20,17 +20,23 @@ public class QUTJr2 : MonoBehaviour
     //set movement speed
     //public float speed = 1f;
 
-    
+
     public Vector3 offset;
-    public bool goRight = true;
-    public bool goUp = true;
-    public bool move = true;
+    private bool goRight = true;
+    private bool goUp = true;
+    private bool move = true;
     private bool jump = true;
     private bool jumpForward = false;
     private bool up = true;
     public bool nod = true;
     public Vector3 currentPos;
     public float distanceCovered = 0;
+    public bool collapse = false;
+    bool forwardFall = false;
+    float currentAngle = 0;
+    float previousAngle;
+    float frames = 0;
+    bool slump = false;
 
     void Awake()
     {
@@ -60,12 +66,6 @@ public class QUTJr2 : MonoBehaviour
                     angle = control.GetComponent<controller>().value;
                 }
             }
-            
-            if (gameObject.tag == "base")
-            {
-                angle = control.GetComponent<Walking>().value;
-            }
-            
         }
 
 
@@ -108,9 +108,12 @@ public class QUTJr2 : MonoBehaviour
         {
             //stop moving
             move = false;
+            jump = false;
+            nod = false;
+            collapse = true;
         }
 
-        if (Input.GetKeyUp("up") && jumpForward == false)
+        if (Input.GetKeyUp("up") && jumpForward == false && collapse == false)
         {
             //returns QUT Jr continually walking left and right
             move = true;
@@ -122,6 +125,11 @@ public class QUTJr2 : MonoBehaviour
             Jump();
         }
 
+        //controls collapse
+        if (collapse == true)
+        {
+            Collapse();
+        }
 
         //recalculate the bounds of the mesh
         mesh.RecalculateBounds();
@@ -188,6 +196,7 @@ public class QUTJr2 : MonoBehaviour
                 goUp = true;
             }
         }
+
         
 
         //controls direction of QUT Jr walking
@@ -298,6 +307,85 @@ public class QUTJr2 : MonoBehaviour
 
     }
 
+    private void Collapse()
+    {
+        if (collapse == true)
+        {
+            //character falls to the ground
+            if (currentPos.y > 0)
+            {
+                if (gameObject.tag == "base")
+                {
+                    Vector3 goDown = new Vector3(0f, -0.01f, 1f);
+                    MoveByOffSet(goDown);
+                }
+                currentPos.y -= 0.01f;
+            }
+            //controls slumping for if character is on the ground
+            if (currentPos.y <= 0)
+            {
+                slump = true;
+
+            }
+            if (slump == true)
+            {
+                //charcter slumps
+                if (forwardFall == true)
+                {
+                    previousAngle = currentAngle + 0.1f;
+                    if (gameObject.tag == "upperarm")
+                    {
+                        RotateAroundPoint(jointLocation, currentAngle, previousAngle);
+                        if (child != null)
+                        {
+                            Vector3 pos = new Vector3(0.1f, -0.01f, 1f);
+                            child.GetComponent<QUTJr2>().MoveByOffSet(pos);
+                            child.GetComponent<QUTJr2>().RotateAroundPoint(jointLocation, angle, lastAngle);
+                        }
+                    }
+                    currentAngle -= 0.1f;
+                }
+                //character returns to standing
+                if (forwardFall == false)
+                {
+                    previousAngle = currentAngle - 0.1f;
+                    if (gameObject.tag == "upperarm")
+                    {
+                        RotateAroundPoint(jointLocation, currentAngle, previousAngle);
+                        if (child != null)
+                        {
+                            Vector3 pos = new Vector3(-0.1f, -0.001f, 1f);
+                            child.GetComponent<QUTJr2>().MoveByOffSet(pos);
+                            child.GetComponent<QUTJr2>().RotateAroundPoint(jointLocation, angle, lastAngle);
+                        }
+                    }
+                    currentAngle += 0.1f;
+                }
+                frames += 1;
+            }
+        }
+
+        //controls the slumping
+        if (slump == true && frames <= 11f)
+        {
+            forwardFall = true;
+        }
+        if (frames > 11f && slump == true)
+        {
+            forwardFall = false;
+        }
+
+        //Character returns to moving and jumping continuously
+        if (frames >= 22f)
+        {
+            slump = false;
+            collapse = false;
+            move = true;
+            jump = true;
+            nod = true;
+            frames = 0;
+        }
+    }
     private void DrawLimb()
     {
         //Add a mesh filter and mesh renderer to empty gameobject
