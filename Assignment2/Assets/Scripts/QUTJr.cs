@@ -31,6 +31,9 @@ public class QUTJr : MonoBehaviour
     public bool nod = true;
     public Vector3 currentPos;
     public float distanceCovered = 0;
+    public bool collapse = false;
+    float currentAngle = 0;
+    float previousAngle;
 
     void Awake()
     {
@@ -105,9 +108,63 @@ public class QUTJr : MonoBehaviour
             move = false;
             jump = false;
             nod = false;
+            //collapse = true;
+            bool forwardFall = true;
+
+            if (forwardFall == true)
+            {
+                previousAngle = currentAngle + 0.01f;
+                if (gameObject.tag == "lowerarm")
+                {
+                    RotateAroundPoint(currentPos, currentAngle, previousAngle);
+                    if (child != null)
+                    {
+                        //child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, currentAngle - 0.3f, previousAngle + 0.3f);                       
+                    }
+                }
+                if (gameObject.tag == "upperarm")
+                {
+                    RotateAroundPoint(jointLocation, currentAngle - 0.3f, previousAngle + 0.3f);
+                    if (child != null)
+                    {
+                        child.GetComponent<QUTJr>().RotateAroundPoint(jointLocation, currentAngle - 0.3f, previousAngle + 0.3f);
+                    }
+                }
+                currentAngle -= 0.01f;
+            }
+            
+
+            if (collapse == true)
+            {
+                
+                if (forwardFall == false)
+                {
+                    previousAngle = currentAngle;
+                    if (gameObject.tag == "lowerarm")
+                    {
+                        RotateAroundPoint(currentPos, currentAngle, previousAngle);
+                        currentAngle -= 0.01f;
+                    }
+                }
+                if (currentAngle <= 0.5f)
+                {
+                    forwardFall = true;
+                }
+                if (currentAngle > 0.5f)
+                {
+                    forwardFall = false;
+                    /*
+                    if (currentAngle < 0)
+                    {
+                        collapse = false;
+                        move = true;
+                        jump = true;
+                    }*/
+                }
+            }
         }
 
-        if (Input.GetKeyUp("w") && jumpForward == false)
+        if (Input.GetKeyUp("w") && jumpForward == false && collapse == false)
         {
             //returns QUT Jr continually walking left and right
             move = true;
@@ -118,7 +175,12 @@ public class QUTJr : MonoBehaviour
         {
             Jump();
         }
-        
+
+        //controls collapse
+        if (collapse == true)
+        {
+           
+        }
 
         if (child != null)
         {
@@ -299,6 +361,52 @@ public class QUTJr : MonoBehaviour
                 jump = true;
             }
         }
+        
+    }
+
+    private void Collapse()
+    {
+        float currentAngle = 0;
+        float previousAngle;
+        
+        bool forwardFall = true;
+        
+        if (collapse == true)
+        {
+            if (forwardFall == true)
+            {
+                previousAngle = currentAngle;
+                if (gameObject.tag == "lowerarm")
+                {
+                    RotateAroundPoint(currentPos, currentAngle, previousAngle);
+                    currentAngle += 0.01f;
+                }
+            }
+            if (forwardFall == false)
+            {
+                previousAngle = currentAngle;
+                if (gameObject.tag == "lowerarm")
+                {
+                    RotateAroundPoint(currentPos, currentAngle, previousAngle);
+                    currentAngle -= 0.01f;
+                }
+            }
+            if (currentAngle <= 0.5f)
+            {
+                forwardFall = true;
+            }
+            if (currentAngle > 0.5f)
+            {
+                forwardFall = false;
+                if (currentAngle < 0)
+                {
+                    collapse = false;
+                    move = true;
+                    jump = true;
+                }
+            }
+        }
+        
         
     }
 
